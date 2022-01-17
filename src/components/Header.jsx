@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useReducer} from "react";
 import ThemeContext from '../context/ThemeContext';
 
 const Header = () =>{
@@ -17,7 +17,7 @@ const Header = () =>{
     return(
        <div style={{ backgroundColor: darkMode ? "white" : "black",  color: darkMode ? "black" : "white", display:"flex", justifyContent:"space-between", padding:"16px", alignItems:"center"}}>
           <h1>React Hooks</h1>
-          <button type="button" style={{padding:"8px 16px ", color:"white", height:"100%", backgroundColor:"grey"}} onClick={handleClick}>{darkMode ? "Go to Light Mode" : "Go to Dark Mode"}</button>
+          <button type="button" style={{padding:"8px 16px ", color:"white", height:"100%", backgroundColor:"grey"}} onClick={handleClick}>{darkMode ? "Go to Dark Mode" : "Go to Light Mode"}</button>
        </div>
     );
 }
