@@ -36,9 +36,11 @@ const Characters = () =>{
     }
   
     //handleSearch usando useCallback
-    const handleSearch = useCallback(() =>{
+    const handleSearch = useCallback(() =>{ 
       setSearch(searchInput.current.value)
     }, [])
+
+    
   /*handleSearch usando useRef  
     const handleSearch = () =>{
       setSearch(searchInput.current.value);
