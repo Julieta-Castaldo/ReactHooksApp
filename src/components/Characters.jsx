@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useReducer, useMemo, useRef} from "react";
-
+import React, {useState, useEffect, useCallback, useReducer, useMemo, useRef} from "react";
+import Search from "./Search";
 
 //Usando useReducer para agregar a favoritos
 const initialState ={
@@ -34,11 +34,15 @@ const Characters = () =>{
       dispatch({type: 'ADD_TO_FAVORITE', payload: favorite})
       setHaveFavorites(true);
     }
-
-  //handleSearch usando useRef  
+  
+    //handleSearch usando useCallback
+    const handleSearch = useCallback(() =>{
+      setSearch(searchInput.current.value)
+    }, [])
+  /*handleSearch usando useRef  
     const handleSearch = () =>{
       setSearch(searchInput.current.value);
-    }
+    }*/
    {/* sin usar useMemo FILTRADO
     const filteredUsers = characters.filter((user) =>{
       return user.name.toLowerCase().includes(search.toLowerCase());
@@ -66,9 +70,7 @@ const Characters = () =>{
           </ul>
         </div>
 
-        <div className="Search" style={{padding:"16px"}}>
-          <input type="text" value={search} ref={searchInput} onChange={handleSearch} placeholder="Search character" style={{padding:"8px", borderRadius:"6px", border:"none"}}></input>
-        </div>
+        <Search search={search} searchInput={searchInput} handleSearch={handleSearch}></Search>
         
         {filteredUsers.map(character =>(
            <div key={character.id} className="item"
