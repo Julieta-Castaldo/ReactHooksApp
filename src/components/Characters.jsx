@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer, useMemo} from "react";
+import React, {useState, useEffect, useReducer, useMemo, useRef} from "react";
 
 
 //Usando useReducer para agregar a favoritos
@@ -22,7 +22,7 @@ const Characters = () =>{
     const [characters, setCharacters] = useState([]);   
     const [haveFavorites, setHaveFavorites] = useState(false);
     const [search, setSearch] = useState('');
-    
+    const searchInput = useRef(null);
     useEffect(()=>{
         fetch("https://rickandmortyapi.com/api/character/") //recibo la información
         .then(response => response.json())  //la transformo a json
@@ -35,9 +35,9 @@ const Characters = () =>{
       setHaveFavorites(true);
     }
 
-    //Buscador usando UseMemo
-    const handleSearch = (event) =>{
-      setSearch(event.target.value)
+  //handleSearch usando useRef  
+    const handleSearch = () =>{
+      setSearch(searchInput.current.value);
     }
    {/* sin usar useMemo FILTRADO
     const filteredUsers = characters.filter((user) =>{
@@ -67,7 +67,7 @@ const Characters = () =>{
         </div>
 
         <div className="Search" style={{padding:"16px"}}>
-          <input type="text" value={search} onChange={handleSearch} placeholder="Search character" style={{padding:"8px", borderRadius:"6px", border:"none"}}></input>
+          <input type="text" value={search} ref={searchInput} onChange={handleSearch} placeholder="Search character" style={{padding:"8px", borderRadius:"6px", border:"none"}}></input>
         </div>
         
         {filteredUsers.map(character =>(
