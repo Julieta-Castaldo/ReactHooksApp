@@ -1,6 +1,9 @@
-import React, {useState, useEffect, useCallback, useReducer, useMemo, useRef} from "react";
+import React, {useState, useCallback, useReducer, useMemo, useRef} from "react";
 import Search from "./Search";
+import useCharacter from "../hooks/useCharacter.js";  //Mis hooks personalizados
 
+
+const API = "https://rickandmortyapi.com/api/character/";
 //Usando useReducer para agregar a favoritos
 const initialState ={
   favorites:[]
@@ -19,16 +22,11 @@ const favoriteReducer = (state, action) => {
 
 const Characters = () =>{
     const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
-    const [characters, setCharacters] = useState([]);   
     const [haveFavorites, setHaveFavorites] = useState(false);
     const [search, setSearch] = useState('');
     const searchInput = useRef(null);
-    useEffect(()=>{
-        fetch("https://rickandmortyapi.com/api/character/") //recibo la información
-        .then(response => response.json())  //la transformo a json
-        .then(data => setCharacters(data.results))  //envío la info a mi hook de estado
-
-    }, []);
+    
+    const characters = useCharacter(API);  //usando mis hooks personalizados 
     
     const handleClick = favorite => {   //agregando a favoritos
       dispatch({type: 'ADD_TO_FAVORITE', payload: favorite})
