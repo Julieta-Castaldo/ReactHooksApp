@@ -1,9 +1,7 @@
 import React, {useState, useCallback, useReducer, useMemo, useRef} from "react";
 import Search from "./Search";
-import useCharacter from "../hooks/useCharacter.js";  //Mis hooks personalizados
+import useCharacter from "../hooks/useCharacter.js";
 
-
-const API = "https://rickandmortyapi.com/api/character/";
 //Usando useReducer para agregar a favoritos
 const initialState ={
   favorites:[]
@@ -20,13 +18,15 @@ const favoriteReducer = (state, action) => {
   }
 }
 
+const API = "https://rickandmortyapi.com/api/character/";
+
 const Characters = () =>{
-    const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
+    const [favorites, dispatch] = useReducer(favoriteReducer, initialState); 
     const [haveFavorites, setHaveFavorites] = useState(false);
     const [search, setSearch] = useState('');
     const searchInput = useRef(null);
     
-    const characters = useCharacter(API);  //usando mis hooks personalizados 
+    const characters = useCharacter(API);
     
     const handleClick = favorite => {   //agregando a favoritos
       dispatch({type: 'ADD_TO_FAVORITE', payload: favorite})
@@ -43,10 +43,10 @@ const Characters = () =>{
     const handleSearch = () =>{
       setSearch(searchInput.current.value);
     }*/
-   {/* sin usar useMemo FILTRADO
+   /* sin usar useMemo FILTRADO
     const filteredUsers = characters.filter((user) =>{
       return user.name.toLowerCase().includes(search.toLowerCase());
-    })*/}
+    })*/
 
     //filtrado Usando useMemo
     const filteredUsers = useMemo(() =>
